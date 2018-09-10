@@ -22,13 +22,14 @@ public class ArtistaDAO {
     ResultSet rs;
     
     Conexao con = new Conexao();
-    Artista art = new Artista();
+    Artista ar = new Artista();
     
     public void artistaComboBox(JComboBox art){
         
         String sql = "select * from artista";
         
         try{
+            art.removeAllItems();
             conexao = con.conector();
             pst = conexao.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -37,6 +38,7 @@ public class ArtistaDAO {
                 art.addItem(rs.getString("nome_artista"));
             }
             con.desconector(conexao);
+            art.addItem("Adicionar...");
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Erro: "+e);
