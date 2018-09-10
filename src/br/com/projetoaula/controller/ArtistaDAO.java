@@ -45,6 +45,26 @@ public class ArtistaDAO {
         
     }
     
+    public void insereArtista(String nome){
+        
+        String sql = "insert into artista (nome_artista) values (?)";
+        
+        try{
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            
+            pst.setString(1, nome);
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Artista inserido com sucesso!");
+            con.desconector(conexao);
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro: "+e);
+        }
+        
+    }
+    
     
     
 }

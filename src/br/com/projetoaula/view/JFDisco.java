@@ -9,9 +9,13 @@ import br.com.projetoaula.controller.DiscoDAO;
 import br.com.projetoaula.controller.GeneroDAO;
 import br.com.projetoaula.controller.ArtistaDAO;
 import com.mysql.fabric.xmlrpc.base.Data;
+import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.sql.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -22,7 +26,7 @@ public class JFDisco extends javax.swing.JFrame {
     /**
      * Creates new form JFDisco
      */
-
+    
     
     public JFDisco() {
         initComponents();
@@ -74,13 +78,14 @@ public class JFDisco extends javax.swing.JFrame {
         ArtistaDAO art = new ArtistaDAO();
         art.artistaComboBox(comboArtista);
         comboArtista.addItem("Adicionar...");
+        lblCapa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         btnConsulta = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -116,9 +121,17 @@ public class JFDisco extends javax.swing.JFrame {
 
         jLabel8.setText("Preço:");
 
+        txtCapa.setColumns(1);
+        txtCapa.setMaximumSize(new java.awt.Dimension(14, 24));
+
         jLabel1.setText("Capa:");
 
         btnCapa.setText("Carregar imagem");
+        btnCapa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapaActionPerformed(evt);
+            }
+        });
 
         bntInserir.setText("Cadastrar");
         bntInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -144,59 +157,67 @@ public class JFDisco extends javax.swing.JFrame {
             }
         });
 
+        lblCapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/semcapa.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboArtista, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboArtista, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(38, 38, 38)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtFaixas, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                                    .addComponent(txtAno))
-                                .addGap(63, 63, 63))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnCapa))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCapa)
-                                .addGap(26, 26, 26)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8))
-                                .addGap(34, 34, 34)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnCapa))
-                        .addGap(16, 16, 16))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(bntInserir)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addGap(20, 20, 20)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(bntInserir)))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtFaixas, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCapa)
+                        .addGap(19, 19, 19))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +230,7 @@ public class JFDisco extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,16 +238,22 @@ public class JFDisco extends javax.swing.JFrame {
                     .addComponent(txtFaixas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnCapa)
-                    .addComponent(comboArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(bntInserir)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblCapa)
+                        .addGap(43, 43, 43))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(comboArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCapa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bntInserir)
+                        .addGap(28, 28, 28))))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -269,7 +296,7 @@ public class JFDisco extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnConsulta)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +306,7 @@ public class JFDisco extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(btnConsulta)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,32 +316,6 @@ public class JFDisco extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTituloActionPerformed
-
-    private void txtDuracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDuracaoActionPerformed
-
-    private void txtFaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFaixasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFaixasActionPerformed
-
-    private void bntInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirActionPerformed
-        // TODO add your handling code here:
-        DiscoDAO disco = new DiscoDAO();
-        disco.InserirDisco(txtTitulo.getText(), Integer.parseInt(txtAno.getText()),
-                Integer.parseInt(txtDuracao.getText()),
-                Double.parseDouble(txtPreco.getText()), Integer.parseInt(txtFaixas.getText()),
-                comboArtista.getSelectedIndex()+1, comboGenero.getSelectedIndex()+1,
-                txtCapa.getText());
-    }//GEN-LAST:event_bntInserirActionPerformed
-
-    private void comboGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGeneroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboGeneroActionPerformed
-
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         // TODO add your handling code here:
         DiscoDAO disco = new DiscoDAO();
@@ -323,7 +324,6 @@ public class JFDisco extends javax.swing.JFrame {
 
     private void comboArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboArtistaActionPerformed
         // TODO add your handling code here:
- 
     }//GEN-LAST:event_comboArtistaActionPerformed
 
     private void comboArtistaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboArtistaItemStateChanged
@@ -335,6 +335,43 @@ public class JFDisco extends javax.swing.JFrame {
             new JFArtista().setVisible(true);
         }
     }//GEN-LAST:event_comboArtistaItemStateChanged
+
+    private void comboGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboGeneroActionPerformed
+
+    private void bntInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirActionPerformed
+        // TODO add your handling code here:
+        DiscoDAO disco = new DiscoDAO();
+        disco.InserirDisco(txtTitulo.getText(), Integer.parseInt(txtAno.getText()),
+            Integer.parseInt(txtDuracao.getText()),
+            Double.parseDouble(txtPreco.getText()), Integer.parseInt(txtFaixas.getText()),
+            comboArtista.getSelectedIndex()+1, comboGenero.getSelectedIndex()+1,
+            txtCapa.getText());
+    }//GEN-LAST:event_bntInserirActionPerformed
+
+    private void btnCapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapaActionPerformed
+        // TODO add your handling code here:
+        JFileChooser file = new JFileChooser();
+        file.showOpenDialog(this);
+        File selecionado = file.getSelectedFile();
+        txtCapa.setText(selecionado.getAbsolutePath());
+        ImageIcon imagem = new ImageIcon(txtCapa.getText());
+        lblCapa.setIcon(new ImageIcon(imagem.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+
+    }//GEN-LAST:event_btnCapaActionPerformed
+
+    private void txtFaixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFaixasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFaixasActionPerformed
+
+    private void txtDuracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDuracaoActionPerformed
+
+    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -390,6 +427,7 @@ public class JFDisco extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblCapa;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtCapa;
     private javax.swing.JTextField txtDuracao;
