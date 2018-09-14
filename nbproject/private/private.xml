@@ -2,10 +2,35 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> eb04bd97544ad369862053858f6e6f9b0f206983
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/model/Disco.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFDisco.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/controller/Servicos.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/controller/DiscoDAO.java</file>
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> 2a3e82e9c4edb3815025a6969e2648820b09a253
+            <file>file:/C:/Users/Eduardo/Github/sgd/src/br/com/projetoaula/controller/GeneroDAO.java</file>
+            <file>file:/C:/Users/Eduardo/Github/sgd/src/br/com/projetoaula/controller/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Eduardo/Github/sgd/src/br/com/projetoaula/view/JFDisco.java</file>
+            <file>file:/C:/Users/Eduardo/Github/sgd/src/br/com/projetoaula/view/JFArtista.java</file>
+<<<<<<< HEAD
+=======
+=======
+            <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFArtista.java</file>
+            <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFPrincipal.java</file>
+            <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFDisco.java</file>
+>>>>>>> f03cae5613596f7038c57a2a70203fef0a58b947
+>>>>>>> 97d7ff49db18262bd3c41c3461e6e0c7271f6280
+>>>>>>> 2a3e82e9c4edb3815025a6969e2648820b09a253
+>>>>>>> eb04bd97544ad369862053858f6e6f9b0f206983
         </group>
     </open-files>
 </project-private>
