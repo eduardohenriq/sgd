@@ -49,13 +49,15 @@ public class ArtistaDAO {
     
     public void insereArtista(String nome){
         
+        ar.setNome_artista(nome);
+        
         String sql = "insert into artista (nome_artista) values (?)";
         
         try{
             conexao = con.conector();
             pst = conexao.prepareStatement(sql);
             
-            pst.setString(1, nome);
+            pst.setString(1, ar.getNome_artista());
             
             pst.execute();
             JOptionPane.showMessageDialog(null, "Artista inserido com sucesso!");

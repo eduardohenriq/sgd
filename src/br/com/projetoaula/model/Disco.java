@@ -44,14 +44,14 @@ public class Disco {
     /**
      * @return the lancamento_disco
      */
-    public Date getLancamento_disco() {
+    public int getLancamento_disco() {
         return lancamento_disco;
     }
 
     /**
      * @param lancamento_disco the lancamento_disco to set
      */
-    public void setLancamento_disco(Date lancamento_disco) {
+    public void setLancamento_disco(int lancamento_disco) {
         this.lancamento_disco = lancamento_disco;
     }
 
@@ -141,7 +141,7 @@ public class Disco {
     
     private int id_disco;
     private String nome_disco;
-    private Date lancamento_disco;
+    private int lancamento_disco;
     private int duracao_disco;
     private double preco_disco;
     private int faixas_disco;
