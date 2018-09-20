@@ -5,6 +5,7 @@
  */
 package br.com.projetoaula.controller;
 
+import java.io.*;
 import javax.swing.*;
 /**
  *
@@ -80,6 +81,38 @@ public class Servicos {
         gen.setSelectedIndex(0);
         art.setSelectedIndex(0);
         
+        
+    }
+    
+    //SERVIÇO PARA SELECIONAR A IMAGEM AUTOMATICAMENTE CASO O CAMPO FIQUE EM BRANCO
+    public void verificaCapa(JTextField capa){
+        if(capa.getText().equals("")){
+            capa.setText(System.getProperty("user.dir")+"/src/imagens/semcapa.jpg");
+        }
+    }
+    
+    //MÉTODO PARA TRANSFERIR IMAGEM PARA PASTA DO PROJETO
+    public String transfereImg(String capa){
+        try{
+        String dst = "/src/capas/";
+        File f = new File(capa);
+        
+        FileInputStream in = new FileInputStream(capa);
+        FileOutputStream out = new FileOutputStream(System.getProperty("user.dir")+dst+f.getName());
+        byte[] buf = new byte[1024];
+        int len;
+        while((len = in.read(buf)) > 0){
+            out.write(buf, 0, len);
+        }
+        out.close();
+        in.close();
+        
+        return System.getProperty("user.dir")+dst+f.getName();
+        
+        }catch(Exception e){
+            System.out.println("Erro: "+e);
+            return null;
+        }
         
     }
         
