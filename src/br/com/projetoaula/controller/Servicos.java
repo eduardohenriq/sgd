@@ -94,7 +94,7 @@ public class Servicos {
     //MÉTODO PARA TRANSFERIR IMAGEM PARA PASTA DO PROJETO
     public String transfereImg(String capa){
         try{
-        String dst = "/src/capas/";
+        String dst = "\\src\\capas";
         File f = new File(capa);
         
         FileInputStream in = new FileInputStream(capa);

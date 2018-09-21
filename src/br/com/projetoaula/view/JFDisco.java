@@ -493,8 +493,9 @@ public class JFDisco extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+        /*
         ArtistaDAO art = new ArtistaDAO();
-        art.artistaComboBox(comboArtista);
+        art.artistaComboBox(comboArtista);*/
     }//GEN-LAST:event_formWindowActivated
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -560,7 +561,8 @@ public class JFDisco extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-
+        ArtistaDAO art = new ArtistaDAO();
+        art.artistaComboBox(comboArtista);
         
     }//GEN-LAST:event_formWindowOpened
 

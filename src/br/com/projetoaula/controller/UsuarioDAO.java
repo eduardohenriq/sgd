@@ -98,6 +98,63 @@ public class UsuarioDAO {
         
     }
     
+    public void alterarUsuario(int id, String nome, String login, String senha, JComboBox tipo){
+        usu.setId_usuario(id);
+        usu.setNome_usuario(nome);
+        usu.setLogin_usuario(login);
+        usu.setSenha_usuario(senha);
+        //usu.setTipo_usuario(tipo);
+        
+        String sql = "update usuario set nome_usuario = ?, login_usuario = ?, senha_usuario = ?,"
+                + "tipo_usuario = ? where id_usuario = ?";
+        
+        try{
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, usu.getNome_usuario());
+            pst.setString(2, usu.getLogin_usuario());
+            pst.setString(3, usu.getSenha_usuario());
+            if(tipo.getSelectedIndex()==0){
+                pst.setString(4, "adm");
+            }else{
+                pst.setString(4, "usu");
+            }
+            pst.setInt(5, usu.getId_usuario());
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
+            con.desconector(conexao);
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao alterar usuário: "+e);
+        }
+        
+    }
+    
+    public void removeUsuario(int id){
+        usu.setId_usuario(id);
+        
+        String sql = "delete from usuario where id_usuario = ?";
+        
+        try{
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            
+            pst.setInt(1, usu.getId_usuario());
+            if(JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deletar?", "ATENÇÃO", JOptionPane.YES_NO_CANCEL_OPTION)==0){
+               pst.execute();
+               JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+            }
+            
+            con.desconector(conexao);
+            
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao remover o usuário: "+e);
+        }
+        
+    }
+    
     public void ConsultaUsuario(JTextField consulta, JTable tabela){
         String sql = "select id_usuario as ID, nome_usuario as Nome, login_usuario as Login, "
                 + "tipo_usuario as Tipo from usuario where id_usuario like ?";
@@ -113,6 +170,28 @@ public class UsuarioDAO {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
+    }
+    
+    public void ConsultaNomeUsuario(String nome, JTable tabela){
+        usu.setNome_usuario(nome);
+        
+        String sql = "select id_usuario as ID, nome_usuario as Nome, login_usuario as Login, "
+                + "tipo_usuario as Tipo from usuario where nome_usuario like ?";
+        
+        try{
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            
+            pst.setString(1, nome+"%");
+            rs = pst.executeQuery();
+            
+            tabela.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e){
+            System.out.println("Erro: "+e);
+        }
+        
+        
     }
     
     

@@ -58,6 +58,8 @@ public class JFArtista extends javax.swing.JFrame {
             }
         });
 
+        txtNome.setEditable(false);
+
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jLabel1.setText("Artistas");
 
