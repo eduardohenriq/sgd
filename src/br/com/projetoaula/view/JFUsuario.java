@@ -59,6 +59,8 @@ public class JFUsuario extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtConfirmarSenha = new javax.swing.JPasswordField();
 
         jInternalFrame1.setVisible(true);
 
@@ -179,7 +181,7 @@ public class JFUsuario extends javax.swing.JFrame {
                     .addComponent(txtConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonPesquisa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -231,6 +233,10 @@ public class JFUsuario extends javax.swing.JFrame {
 
         txtId.setEditable(false);
 
+        jLabel6.setText("Confirmar senha");
+
+        txtConfirmarSenha.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -261,8 +267,10 @@ public class JFUsuario extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(jLabel4)
-                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSenha))
+                            .addComponent(txtSenha)
+                            .addComponent(jLabel6)
+                            .addComponent(comboTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtConfirmarSenha))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30))
@@ -285,8 +293,8 @@ public class JFUsuario extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,11 +308,15 @@ public class JFUsuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         jTabbedPane2.addTab("Cadastro", jPanel1);
@@ -329,7 +341,7 @@ public class JFUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(radioId.isSelected()){
             us.ConsultaUsuario(txtConsulta, tbUsuario);
-        }else{
+        }else if(radioNome.isSelected()){
             us.ConsultaNomeUsuario(txtConsulta.getText(), tbUsuario);
         }
         
@@ -353,45 +365,52 @@ public class JFUsuario extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        s.travarUsuario(txtNome, txtLogin, txtSenha, comboTipo);
-        s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, comboTipo);
+        s.travarUsuario(txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo);
+        s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo, tbUsuario);
         s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
         
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         // TODO add your handling code here:
-        s.destravarUsuario(txtNome, txtLogin, txtSenha, comboTipo);
+        s.destravarUsuario(txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo);
+        s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo, tbUsuario);
         s.clicarInserir(btnInserir, btnCancelar, btnSalvar);
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        s.destravarUsuario(txtNome, txtLogin, txtSenha, comboTipo);
+        s.destravarUsuario(txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo);
         s.clicarAlterar(btnInserir, btnAlterar, btnCancelar, btnSalvar);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         // TODO add your handling code here:
-        us.removeUsuario(Integer.parseInt(txtId.getText()));
-        s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, comboTipo);
+        if(us.removeUsuario(Integer.parseInt(txtId.getText()))){
+        s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo, tbUsuario);
         s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
         s.limparTabela(tbUsuario);
+        }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        if(s.flag==0){
-            us.InserirUsuario(txtNome, txtLogin, txtSenha, comboTipo);
-        }else{
-            us.alterarUsuario(Integer.parseInt(txtId.getText()), txtNome.getText(), txtLogin.getText(),
-                    txtSenha.getText(), comboTipo);
-        }
+        if(s.validaUsuario(txtNome, txtLogin, txtSenha, txtConfirmarSenha)){
+            if(s.confirmarSenha(txtSenha.getText(), txtConfirmarSenha.getText())){
+                if(s.flag==0){
+                    us.InserirUsuario(txtNome, txtLogin, txtSenha, comboTipo);
+                }else{
+                    us.alterarUsuario(Integer.parseInt(txtId.getText()), txtNome.getText(), txtLogin.getText(),
+                            txtSenha.getText(), comboTipo);
+                }
+
+                s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
+                s.travarUsuario(txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo);
+                s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, txtConfirmarSenha, comboTipo, tbUsuario);
+                s.limparTabela(tbUsuario);
         
-        s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
-        s.travarUsuario(txtNome, txtLogin, txtSenha, comboTipo);
-        s.limparUsuario(txtId, txtNome, txtLogin, txtSenha, comboTipo);
-        s.limparTabela(tbUsuario);
+            }
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void tbUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUsuarioMouseClicked
@@ -450,6 +469,7 @@ public class JFUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -457,6 +477,7 @@ public class JFUsuario extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioId;
     private javax.swing.JRadioButton radioNome;
     private javax.swing.JTable tbUsuario;
+    private javax.swing.JPasswordField txtConfirmarSenha;
     private javax.swing.JTextField txtConsulta;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLogin;

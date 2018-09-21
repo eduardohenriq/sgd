@@ -99,7 +99,7 @@ public class DiscoDAO {
         
     }
     
-    public void deletaDisco(int id){
+    public boolean deletaDisco(int id){
         disco.setId_disco(id);
         
         String sql = "delete from disco where id_disco = ?";
@@ -112,12 +112,16 @@ public class DiscoDAO {
             if(JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deletar?", "ATENÇÃO", JOptionPane.YES_NO_CANCEL_OPTION)==0){
                pst.execute();
                JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
-            }
-            
-            con.desconector(conexao);
+               con.desconector(conexao);
+               return true;
+            }else{
+                con.desconector(conexao);
+                return false;
+            }            
         
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Erro: "+e);
+            return false;
         }
         
     }
@@ -136,6 +140,28 @@ public class DiscoDAO {
             rs = pst.executeQuery();
             
             tabela.setModel(DbUtils.resultSetToTableModel(rs));
+            con.desconector(conexao);
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro:  "+e);
+        }
+        
+    }
+    
+        public void consultaNomeDisco(String nome, JTable tab){
+        disco.setNome_disco(nome);
+        String sql = "select id_disco as ID, nome_disco as Nome, ano_disco as Ano, duracao_disco as Duração,"
+                + " preco_disco as Preço, faixas_disco as Faixas, artista_disco as Artista, genero_disco as"
+                + " Gênero, capa_disco as Capa from disco where nome_disco like ?";
+                
+        try{
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, disco.getNome_disco()+"%");
+            
+            rs = pst.executeQuery();
+            
+            tab.setModel(DbUtils.resultSetToTableModel(rs));
             con.desconector(conexao);
             
         }catch(Exception e){

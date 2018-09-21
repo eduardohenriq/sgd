@@ -131,7 +131,7 @@ public class UsuarioDAO {
         
     }
     
-    public void removeUsuario(int id){
+    public boolean removeUsuario(int id){
         usu.setId_usuario(id);
         
         String sql = "delete from usuario where id_usuario = ?";
@@ -144,13 +144,19 @@ public class UsuarioDAO {
             if(JOptionPane.showConfirmDialog(null, "Tem certeza que deseja deletar?", "ATENÇÃO", JOptionPane.YES_NO_CANCEL_OPTION)==0){
                pst.execute();
                JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+               con.desconector(conexao);
+               return true;
+            }else{
+               con.desconector(conexao);
+               return false;
             }
             
-            con.desconector(conexao);
+            
             
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Erro ao remover o usuário: "+e);
+            return false;
         }
         
     }
@@ -182,7 +188,7 @@ public class UsuarioDAO {
             conexao = con.conector();
             pst = conexao.prepareStatement(sql);
             
-            pst.setString(1, nome+"%");
+            pst.setString(1, usu.getNome_usuario()+"%");
             rs = pst.executeQuery();
             
             tabela.setModel(DbUtils.resultSetToTableModel(rs));

@@ -43,6 +43,7 @@ public class JFDisco extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
@@ -86,8 +87,8 @@ public class JFDisco extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioId = new javax.swing.JRadioButton();
+        radioNome = new javax.swing.JRadioButton();
         btnConsulta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -221,7 +222,6 @@ public class JFDisco extends javax.swing.JFrame {
                                     .addComponent(txtCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnCapa)
                                     .addComponent(jButton1))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(comboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,9 +327,11 @@ public class JFDisco extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setName(""); // NOI18N
 
-        jRadioButton1.setText("ID");
+        buttonGroup1.add(radioId);
+        radioId.setText("ID");
 
-        jRadioButton2.setText("Nome");
+        buttonGroup1.add(radioNome);
+        radioNome.setText("Nome");
 
         btnConsulta.setText("Pesquisar");
         btnConsulta.addActionListener(new java.awt.event.ActionListener() {
@@ -369,9 +371,9 @@ public class JFDisco extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(txtConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(radioId)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2)))
+                                .addComponent(radioNome)))
                         .addGap(18, 18, 18)
                         .addComponent(btnConsulta)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -387,8 +389,8 @@ public class JFDisco extends javax.swing.JFrame {
                     .addComponent(btnConsulta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(radioId, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radioNome, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -446,8 +448,11 @@ public class JFDisco extends javax.swing.JFrame {
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         // TODO add your handling code here:
-        DiscoDAO disco = new DiscoDAO();
-        disco.consultaIdDisco(jTable1, txtConsulta);
+        if(radioId.isSelected()){
+            disco.consultaIdDisco(jTable1, txtConsulta);
+        }else if(radioNome.isSelected()){
+            disco.consultaNomeDisco(txtConsulta.getText(), jTable1);
+        }
     }//GEN-LAST:event_btnConsultaActionPerformed
 
     private void comboArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboArtistaActionPerformed
@@ -511,11 +516,13 @@ public class JFDisco extends javax.swing.JFrame {
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         // TODO add your handling code here:
         s.clicarInserir(btnInserir, btnCancelar, btnSalvar);
+        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista, jTable1);
         s.destravarDiscos(txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas,txtCapa, comboGenero, comboArtista);
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
+        if(s.validaDisco(txtTitulo, txtAno, txtDuracao, txtFaixas, txtPreco)){
         s.verificaCapa(txtCapa);
         if(s.flag == 0){
             disco.InserirDisco(txtTitulo.getText(), Integer.parseInt(txtAno.getText()),
@@ -523,6 +530,7 @@ public class JFDisco extends javax.swing.JFrame {
                 Double.parseDouble(txtPreco.getText()), Integer.parseInt(txtFaixas.getText()),
                 comboArtista.getSelectedIndex()+1, comboGenero.getSelectedIndex()+1,
                 txtCapa.getText());
+            
         }else{
             disco.alterarDisco(Integer.parseInt(txtId.getText()), txtTitulo.getText(), Integer.parseInt(txtAno.getText()),
                     Integer.parseInt(txtDuracao.getText()), Double.parseDouble(txtPreco.getText()), Integer.parseInt(txtFaixas.getText()),
@@ -531,10 +539,13 @@ public class JFDisco extends javax.swing.JFrame {
             
             
         }
+        
         s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
         s.travarDiscos(txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista);
-        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista);
+        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista, jTable1);
         s.limparTabela(jTable1);
+        
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -546,16 +557,18 @@ public class JFDisco extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         s.travarDiscos(txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista);
-        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista);
+        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista, jTable1);
         s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         // TODO add your handling code here:
-        disco.deletaDisco(Integer.parseInt(txtId.getText()));
-        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista);
+        if(disco.deletaDisco(Integer.parseInt(txtId.getText()))){
+        s.limparDiscos(txtId, txtTitulo, txtAno, txtDuracao, txtPreco, txtFaixas, txtCapa, comboGenero, comboArtista, jTable1);
         s.padraoBotoes(btnInserir, btnAlterar, btnRemover, btnCancelar, btnSalvar);
         s.limparTabela(jTable1);
+        
+        }
         
     }//GEN-LAST:event_btnRemoverActionPerformed
 
@@ -616,6 +629,7 @@ public class JFDisco extends javax.swing.JFrame {
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> comboArtista;
     private javax.swing.JComboBox<String> comboGenero;
     private javax.swing.JButton jButton1;
@@ -630,11 +644,11 @@ public class JFDisco extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCapa;
+    private javax.swing.JRadioButton radioId;
+    private javax.swing.JRadioButton radioNome;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtCapa;
     private javax.swing.JTextField txtConsulta;
