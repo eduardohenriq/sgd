@@ -5,7 +5,9 @@
  */
 package br.com.projetoaula.controller;
 
+import java.io.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Eduardo
@@ -68,7 +70,7 @@ public class Servicos {
     
     //MÉTODO PARA LIMPAR OS CAMPOS NO FRAME DISCOS
     public void limparDiscos(JTextField id, JTextField nome, JTextField ano, JTextField duracao,
-            JTextField preco, JTextField faixas, JTextField capa, JComboBox gen, JComboBox art){
+            JTextField preco, JTextField faixas, JTextField capa, JComboBox gen, JComboBox art, JTable tab){
         
         id.setText("");
         nome.setText("");
@@ -79,8 +81,69 @@ public class Servicos {
         capa.setText("");
         gen.setSelectedIndex(0);
         art.setSelectedIndex(0);
+        ((DefaultTableModel)tab.getModel()).setRowCount(0);
         
         
+    }
+    
+    //SERVIÇO PARA SELECIONAR A IMAGEM AUTOMATICAMENTE CASO O CAMPO FIQUE EM BRANCO
+    public void verificaCapa(JTextField capa){
+        if(capa.getText().equals("")){
+            capa.setText(System.getProperty("user.dir")+"/src/imagens/semcapa.jpg");
+        }
+    }
+    
+    //MÉTODO PARA TRANSFERIR IMAGEM PARA PASTA DO PROJETO
+    public String transfereImg(String capa){
+        try{
+        String dst = "\\src\\capas";
+        File f = new File(capa);
+        
+        FileInputStream in = new FileInputStream(capa);
+        FileOutputStream out = new FileOutputStream(System.getProperty("user.dir")+dst+f.getName());
+        byte[] buf = new byte[1024];
+        int len;
+        while((len = in.read(buf)) > 0){
+            out.write(buf, 0, len);
+        }
+        out.close();
+        in.close();
+        
+        return System.getProperty("user.dir")+dst+f.getName();
+        
+        }catch(Exception e){
+            System.out.println("Erro: "+e);
+            return null;
+        }
+        
+    }
+    
+    //MÉTODO PARA VALIDAS OS CAMPOS NA FRAME DISCO
+    public boolean validaDisco(JTextField nome, JTextField ano, JTextField duracao, JTextField faixas, 
+            JTextField preco){
+        if(nome.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo nome está vazio!");
+            nome.requestFocus();
+            return false;
+        }else if(ano.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo ano está vazio!");
+            ano.requestFocus();
+            return false;
+        }else if(duracao.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo duração está vazio!");
+            duracao.requestFocus();
+            return false;
+        }else if(faixas.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo faixas está vazio!");
+            faixas.requestFocus();
+            return false;
+        }else if(preco.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "O campo preço está vazio!");
+            preco.requestFocus();
+            return false;
+        }else{
+            return true;
+        }
     }
         
     
@@ -101,34 +164,72 @@ public class Servicos {
     
     //MÉTODO PARA DESTRAVAR OS CAMPOS NO FRAME USUÁRIO
     public void destravarUsuario(JTextField nome, JTextField login, JPasswordField senha, 
-            JComboBox tipo){
+            JPasswordField senhaConfirm, JComboBox tipo){
         
         nome.setEditable(true);
         login.setEditable(true);
         senha.setEditable(true);
+        senhaConfirm.setEditable(true);
         tipo.setEnabled(true);
     }
     
     //MÉTODO PARA TRAVAR OS CAMPOS NO FRAME USUÁRIO
     public void travarUsuario(JTextField nome, JTextField login, JPasswordField senha, 
-            JComboBox tipo){
+            JPasswordField senhaConfirm, JComboBox tipo){
         
         nome.setEditable(false);
         login.setEditable(false);
         senha.setEditable(false);
+        senhaConfirm.setEditable(false);
         tipo.setEnabled(false);
     }
     
     //MÉTODO PARA LIMPAR OS CAMPOS NO FRAME USUÁRIO
         public void limparUsuario(JTextField id, JTextField nome, JTextField login,
-                JPasswordField senha, JComboBox tipo){
+                JPasswordField senha, JPasswordField senhaConfirm, JComboBox tipo, JTable tab){
         
         id.setText("");
         nome.setText("");
         login.setText("");
         senha.setText("");
+        senhaConfirm.setText("");
         tipo.setSelectedIndex(0);
+        ((DefaultTableModel)tab.getModel()).setRowCount(0);
     }
+        
+    //MÉTODO PARA CONFIRMAR SENHA
+        public boolean confirmarSenha(String senha, String senhaConfirm){
+            if(senha.equals(senhaConfirm)){
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null, "As senhas não conferem!");
+                return false;
+            }
+        }
+        
+    //MÉTODO PARA VALIDAR OS CAMPOS
+        public boolean validaUsuario(JTextField nome, JTextField login, JPasswordField senha, 
+                JPasswordField senhaConfirm){
+            if(nome.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo nome está vazio!");
+                nome.requestFocus();
+                return false;
+            }else if(login.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo login está vazio!");
+                login.requestFocus();
+                return false;
+            }else if(senha.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo senha está vazio!");
+                senha.requestFocus();
+                return false;
+            }else if(senhaConfirm.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Confirme sua senha!");
+                senhaConfirm.requestFocus();
+                return false;
+            }else{
+                return true;
+            }
+        }
         
         
     //SERVIÇOS PARA O FRAME ARTISTA
@@ -153,9 +254,21 @@ public class Servicos {
     }
     
     //MÉTODO PARA LIMPAR O CAMPO NO FRAME ARTISTA
-    public void limparArtista(JTextField id, JTextField nome){
+    public void limparArtista(JTextField id, JTextField nome, JTable tab){
         id.setText("");
         nome.setText("");
+        ((DefaultTableModel)tab.getModel()).setRowCount(0);
+    }
+    
+    //MÉTODO PARA VALIDAR OS CAMPOS NO FRAME ARTISTA
+    public boolean validaArtista(JTextField nome){
+        if(nome.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Insira um nome!");
+            nome.requestFocus();
+            return false;
+        }else{
+            return true;
+        }
     }
     
     
@@ -193,7 +306,7 @@ public class Servicos {
     public void clicarTabela(JButton inserir, JButton alterar, JButton remover, JButton cancelar, 
             JButton salvar){
         
-        inserir.setEnabled(false);
+        inserir.setEnabled(true);
         alterar.setEnabled(true);
         remover.setEnabled(true);
         

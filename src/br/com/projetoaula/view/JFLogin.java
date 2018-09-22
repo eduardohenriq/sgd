@@ -144,6 +144,8 @@ public class JFLogin extends javax.swing.JFrame {
                 new JFLogin().setVisible(true);
             }
         });
+    
+        System.out.println(System.getProperty("user.dir")+"\\src");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
