@@ -5,9 +5,10 @@
         <group>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFArtista.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFUsuario.java</file>
+            <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFPrincipal.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFDisco.java</file>
+            <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/view/JFLogin.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/controller/Servicos.java</file>
-            <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/controller/DiscoDAO.java</file>
             <file>file:/C:/Users/Eduardo/Documents/NetBeansProjects/SGD/src/br/com/projetoaula/controller/UsuarioDAO.java</file>
         </group>
     </open-files>

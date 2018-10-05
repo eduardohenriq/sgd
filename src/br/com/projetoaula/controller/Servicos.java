@@ -16,7 +16,8 @@ public class Servicos {
     
     
     public int flag = 0;
-    
+    private int xMouse;
+    private int yMouse;
     // SERVIÇOS PARA O FRAME DISCOS
     
     
@@ -96,7 +97,7 @@ public class Servicos {
     //MÉTODO PARA TRANSFERIR IMAGEM PARA PASTA DO PROJETO
     public String transfereImg(String capa){
         try{
-        String dst = "\\src\\capas";
+        String dst = "\\src\\capas\\";
         File f = new File(capa);
         
         FileInputStream in = new FileInputStream(capa);
@@ -145,6 +146,50 @@ public class Servicos {
             return true;
         }
     }
+    
+    public void mudaCorDiscos(JTextField titulo, JTextField ano,
+                JTextField duracao, JTextField faixas, JTextField preco, JTextField capa){
+        if(titulo.isEditable()){
+            titulo.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            titulo.setBackground(new java.awt.Color(36, 37, 42));
+        }
+        if(ano.isEditable()){
+            ano.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            ano.setBackground(new java.awt.Color(36, 37, 42));
+        }
+        if(duracao.isEditable()){
+            duracao.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            duracao.setBackground(new java.awt.Color(36, 37, 42));
+        }
+        if(faixas.isEditable()){
+            faixas.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            faixas.setBackground(new java.awt.Color(36, 37, 42));
+        }
+        if(preco.isEditable()){
+            preco.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            preco.setBackground(new java.awt.Color(36, 37, 42));
+        }
+        if(capa.isEditable()){
+            capa.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            capa.setBackground(new java.awt.Color(36, 37, 42));
+        }
+        }
+    
+    public void travaBotaoCapa(JButton carregar, JButton usar){
+        carregar.setEnabled(false);
+        usar.setEnabled(false);
+    }
+    
+    public void destravaBotaoCapa(JButton carregar, JButton usar){
+        carregar.setEnabled(true);
+        usar.setEnabled(true);
+    }
         
     
     // SERVIÇOS PARA O FRAME USUÁRIOS
@@ -158,8 +203,7 @@ public class Servicos {
         id.setText(tab.getModel().getValueAt(setar, 0).toString());
         nome.setText(tab.getModel().getValueAt(setar, 1).toString());
         login.setText(tab.getModel().getValueAt(setar, 2).toString());
-        senha.setText(tab.getModel().getValueAt(setar, 3).toString());
-        tipo.setSelectedIndex((int)tab.getModel().getValueAt(setar, 4)-1);
+        tipo.setSelectedItem(tab.getModel().getValueAt(setar,3));
     }
     
     //MÉTODO PARA DESTRAVAR OS CAMPOS NO FRAME USUÁRIO
@@ -231,6 +275,30 @@ public class Servicos {
             }
         }
         
+        public void mudaCorUsuario(JTextField nome, JTextField login, JPasswordField senha,
+                JPasswordField confirmSenha){
+            if(nome.isEditable()){
+                nome.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                nome.setBackground(new java.awt.Color(36, 37, 42));
+            }
+            if(login.isEditable()){
+                login.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                login.setBackground(new java.awt.Color(36, 37, 42));
+            }
+            if(senha.isEditable()){
+                senha.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                senha.setBackground(new java.awt.Color(36, 37, 42));
+            }
+            if(confirmSenha.isEditable()){
+                confirmSenha.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                confirmSenha.setBackground(new java.awt.Color(36, 37, 42));
+            }
+        }
+        
         
     //SERVIÇOS PARA O FRAME ARTISTA
         
@@ -268,6 +336,15 @@ public class Servicos {
             return false;
         }else{
             return true;
+        }
+    }
+    
+    //MÉTODO PARA MUDAR COR DO TEXTBOX NA FRAME ARTISTA
+    public void mudaCorArtista(JTextField nome){
+        if(nome.isEditable()){
+            nome.setBackground(new java.awt.Color(108,122,137));
+        }else{
+            nome.setBackground(new java.awt.Color(36, 37, 42));
         }
     }
     
@@ -316,4 +393,16 @@ public class Servicos {
         tab.clearSelection();
     }
     
+    //
+    public void clicarMouse(java.awt.event.MouseEvent evt){
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }
+    
+    public void arrastarMouse(java.awt.event.MouseEvent evt, JFrame f){
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        
+        f.setLocation(x - xMouse, y - yMouse);
+    }
 }
