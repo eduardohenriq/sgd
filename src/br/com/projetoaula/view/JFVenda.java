@@ -6,7 +6,10 @@
 package br.com.projetoaula.view;
 
 import br.com.projetoaula.controller.CarrinhoDAO;
+import br.com.projetoaula.model.Carrinho;
 import br.com.projetoaula.model.Disco;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +20,11 @@ public class JFVenda extends javax.swing.JFrame {
     /**
      * Creates new form JFVenda
      */
+    
+    Disco disco = new Disco();
+    CarrinhoDAO carDAO = new CarrinhoDAO();
+    Carrinho car = new Carrinho();
+        
     public JFVenda() {
         initComponents();
     }
@@ -48,9 +56,17 @@ public class JFVenda extends javax.swing.JFrame {
         tbItensVenda = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
+        jTabbedPane2.setBackground(new java.awt.Color(52, 73, 94));
+
+        jPanel1.setBackground(new java.awt.Color(52, 73, 94));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(ed_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 29, 60, -1));
 
@@ -175,34 +191,81 @@ public class JFVenda extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Finalização", jPanel2);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        getContentPane().add(jTabbedPane2);
+        jTabbedPane2.setBounds(0, 50, 710, 480);
+
+        jPanel5.setBackground(new java.awt.Color(245, 171, 53));
+        jPanel5.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel5MouseDragged(evt);
+            }
+        });
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel5MousePressed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Registro de Vendas - SGD");
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/fechar.png"))); // NOI18N
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/minimizar.png"))); // NOI18N
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel10)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel10)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel5);
+        jPanel5.setBounds(0, -1, 710, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabProdutoMouseClicked
         // TODO add your handling code here:
-        Disco disco = new Disco();
-        CarrinhoDAO carrinhoDAO = new CarrinhoDAO();
 
         int line = tabProduto.getSelectedRow();
 
@@ -210,9 +273,9 @@ public class JFVenda extends javax.swing.JFrame {
         disco.setNome_disco(tabProduto.getValueAt(line, 1).toString());
         disco.setPreco_disco(Double.valueOf(tabProduto.getValueAt(line, 2).toString()));
 
-        carrinhoDAO.inserir(livro, this);
+        carDAO.inserir(disco, this);
 
-        carrinhoDAO.consultarItensVenda(tbItensVenda, this);
+        carDAO.consultarItensVenda(tbItensVenda, this);
 
     }//GEN-LAST:event_tabProdutoMouseClicked
 
@@ -225,12 +288,12 @@ public class JFVenda extends javax.swing.JFrame {
 
     private void ed_pesqclienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ed_pesqclienteKeyTyped
         // TODO add your handling code here:
-        carDAO.consultarCliente(ed_pesqcliente, tabCliente, this);
+        carDAO.consultarCliente(ed_pesqcliente.getText(), tabCliente, this);
     }//GEN-LAST:event_ed_pesqclienteKeyTyped
 
     private void ed_pesqlivroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ed_pesqlivroKeyTyped
         // TODO add your handling code here:
-        carDAO.consultarLivro(ed_pesqlivro, tabProduto, this);
+        carDAO.consultaNomeDisco(ed_pesqlivro.getText(), tabProduto);
     }//GEN-LAST:event_ed_pesqlivroKeyTyped
 
     private void tbItensVendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbItensVendaKeyPressed
@@ -242,7 +305,7 @@ public class JFVenda extends javax.swing.JFrame {
                 CarrinhoDAO carDAO = new CarrinhoDAO();
                 int line = tbItensVenda.getSelectedRow();
 
-                car.setCar_id(Integer.valueOf(tbItensVenda.getValueAt(line, 0).toString()));
+                car.setId_carrinho(Integer.valueOf(tbItensVenda.getValueAt(line, 0).toString()));
 
                 //System.out.println(car.getCar_id());
                 carDAO.deletar(car, this);
@@ -255,6 +318,30 @@ public class JFVenda extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_tbItensVendaKeyPressed
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jPanel5MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseDragged
+        // TODO add your handling code here:
+        s.arrastarMouse(evt, this);
+    }//GEN-LAST:event_jPanel5MouseDragged
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jPanel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MousePressed
+        // TODO add your handling code here:
+        s.clicarMouse(evt);
+    }//GEN-LAST:event_jPanel5MousePressed
 
     /**
      * @param args the command line arguments
@@ -297,12 +384,16 @@ public class JFVenda extends javax.swing.JFrame {
     private javax.swing.JTextField ed_pesqcliente;
     private javax.swing.JTextField ed_pesqlivro;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
