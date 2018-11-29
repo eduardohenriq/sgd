@@ -20,6 +20,7 @@ public class UsuarioDAO {
     Connection conexao;
     PreparedStatement pst;
     ResultSet rs;
+    public String nome;
     
     //String sql = "select * from usuario where login_usuario = ? and senha_usuario=?";
     
@@ -37,18 +38,27 @@ public class UsuarioDAO {
         usu.setSenha_usuario(passwd.getText());
         JFPrincipal prin = new JFPrincipal();
         String sql = "select * from usuario where login_usuario = ? and senha_usuario=?";
+        String tipo;
         try{
             conexao = con.conector();
             pst = conexao.prepareStatement(sql);
             pst.setString(1, usu.getLogin_usuario());
-            pst.setString(2, usu.getSenha_usuario()); 
+            pst.setString(2, usu.getSenha_usuario());
             
             rs = pst.executeQuery();
             
             if(rs.next()){
                 JOptionPane.showMessageDialog(null, "Acesso Permitido");
-                con.desconector(conexao);
+                nome = rs.getString("nome_usuario");
+                System.out.println(nome);
                 prin.setVisible(true);
+                tipo = rs.getString("tipo_usuario");
+                if(tipo.equals("Administrador")){
+                    prin.btnCadUsu.setEnabled(true);
+                    prin.btnCadCli.setEnabled(true);
+                }
+                prin.jLabel4.setText(nome);
+                con.desconector(conexao);
                 return true;
                 
             }else{
@@ -78,11 +88,8 @@ public class UsuarioDAO {
             pst.setString(1, nome.getText());
             pst.setString(2, login.getText());
             pst.setString(3, senha.getText());
-            if(tipo.getSelectedIndex()==0){
-                pst.setString(4, "adm");
-            }else{
-                pst.setString(4, "usu");
-            }
+            pst.setString(4, tipo.getSelectedItem().toString());
+            
             //pst.setString(4, tipo.getItemAt(i).toString());
             pst.execute();
             
@@ -114,11 +121,7 @@ public class UsuarioDAO {
             pst.setString(1, usu.getNome_usuario());
             pst.setString(2, usu.getLogin_usuario());
             pst.setString(3, usu.getSenha_usuario());
-            if(tipo.getSelectedIndex()==0){
-                pst.setString(4, "adm");
-            }else{
-                pst.setString(4, "usu");
-            }
+            pst.setString(4, tipo.getSelectedItem().toString());
             pst.setInt(5, usu.getId_usuario());
             
             pst.execute();
