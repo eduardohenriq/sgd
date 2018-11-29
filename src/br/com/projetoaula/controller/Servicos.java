@@ -299,6 +299,102 @@ public class Servicos {
             }
         }
         
+    //SERVIÇOS PARA FRAME CLIENTE
+        
+    //MÉTODO PARA SETAR AS INFORMAÇÕES DAS LINHAS SELECIONADAS NA TABELA NOS CAMPOS
+    public void setarCamposCliente(JTable tab, JTextField id, JTextField nome, JTextField endereco,
+            JTextField telefone, JTextField cpf){
+        
+        int setar = tab.getSelectedRow();
+        
+        id.setText(tab.getModel().getValueAt(setar, 0).toString());
+        nome.setText(tab.getModel().getValueAt(setar, 1).toString());
+        endereco.setText(tab.getModel().getValueAt(setar, 2).toString());
+        telefone.setText(tab.getModel().getValueAt(setar, 3).toString());
+        cpf.setText(tab.getModel().getValueAt(setar, 4).toString());
+    }
+    
+    //MÉTODO PARA DESTRAVAR OS CAMPOS NO FRAME USUÁRIO
+    public void destravarCliente(JTextField nome, JTextField endereco, JTextField telefone, 
+            JTextField cpf){
+        
+        nome.setEditable(true);
+        endereco.setEditable(true);
+        telefone.setEditable(true);
+        cpf.setEditable(true);
+    }
+    
+    //MÉTODO PARA TRAVAR OS CAMPOS NO FRAME CLIENTE
+    public void travarCliente(JTextField nome, JTextField endereco, JTextField telefone, 
+            JTextField cpf){
+        
+        nome.setEditable(false);
+        endereco.setEditable(false);
+        telefone.setEditable(false);
+        cpf.setEditable(false);
+    }
+    
+    //MÉTODO PARA LIMPAR OS CAMPOS NO FRAME CLIENTE
+        public void limparCliente(JTextField id, JTextField nome, JTextField endereco,
+                JTextField telefone, JTextField cpf, JTable tab){
+        
+        id.setText("");
+        nome.setText("");
+        endereco.setText("");
+        telefone.setText("");
+        cpf.setText("");
+        ((DefaultTableModel)tab.getModel()).setRowCount(0);
+    }
+        
+    //MÉTODO PARA VALIDAR OS CAMPOS
+        public boolean validaCliente(JTextField nome, JTextField endereco, JTextField telefone, 
+                JTextField cpf){
+            if(nome.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo nome está vazio!");
+                nome.requestFocus();
+                return false;
+            }else if(endereco.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo endereço está vazio!");
+                endereco.requestFocus();
+                return false;
+            }else if(telefone.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo telefone está vazio!");
+                telefone.requestFocus();
+                return false;
+            }else if(cpf.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null, "O campo cpf está vazio!");
+                cpf.requestFocus();
+                return false;
+            }else{
+                return true;
+            }
+        }
+        
+        public void mudaCorCliente(JTextField nome, JTextField endereco, JTextField telefone,
+                JTextField cpf){
+            if(nome.isEditable()){
+                nome.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                nome.setBackground(new java.awt.Color(36, 37, 42));
+            }
+            if(endereco.isEditable()){
+                endereco.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                endereco.setBackground(new java.awt.Color(36, 37, 42));
+            }
+            if(telefone.isEditable()){
+                telefone.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                telefone.setBackground(new java.awt.Color(36, 37, 42));
+            }
+            if(cpf.isEditable()){
+                cpf.setBackground(new java.awt.Color(108,122,137));
+            }else{
+                cpf.setBackground(new java.awt.Color(36, 37, 42));
+            }
+        }
+    
+        
         
     //SERVIÇOS PARA O FRAME ARTISTA
         

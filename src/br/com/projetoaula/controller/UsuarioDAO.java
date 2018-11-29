@@ -55,6 +55,7 @@ public class UsuarioDAO {
                 tipo = rs.getString("tipo_usuario");
                 if(tipo.equals("Administrador")){
                     prin.btnCadUsu.setEnabled(true);
+                    prin.btnCadCli.setEnabled(true);
                 }
                 prin.jLabel4.setText(nome);
                 con.desconector(conexao);

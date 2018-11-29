@@ -480,7 +480,7 @@ public class JFPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadCli;
+    public javax.swing.JButton btnCadCli;
     private javax.swing.JButton btnCadDisco;
     public javax.swing.JButton btnCadUsu;
     private javax.swing.JButton jButton1;
