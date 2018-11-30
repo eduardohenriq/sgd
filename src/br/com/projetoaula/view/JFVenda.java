@@ -6,9 +6,11 @@
 package br.com.projetoaula.view;
 
 import br.com.projetoaula.controller.CarrinhoDAO;
+import br.com.projetoaula.controller.Servicos;
 import br.com.projetoaula.model.Carrinho;
 import br.com.projetoaula.model.Disco;
 import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +22,7 @@ public class JFVenda extends javax.swing.JFrame {
     /**
      * Creates new form JFVenda
      */
-    
+    Servicos s = new Servicos();
     Disco disco = new Disco();
     CarrinhoDAO carDAO = new CarrinhoDAO();
     Carrinho car = new Carrinho();
@@ -55,23 +57,30 @@ public class JFVenda extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tbItensVenda = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
 
         jTabbedPane2.setBackground(new java.awt.Color(52, 73, 94));
+        jTabbedPane2.setForeground(new java.awt.Color(52, 73, 94));
+        jTabbedPane2.setOpaque(true);
 
         jPanel1.setBackground(new java.awt.Color(52, 73, 94));
+        jPanel1.setForeground(new java.awt.Color(52, 73, 94));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(ed_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 29, 60, -1));
+
+        ed_id.setEditable(false);
+        jPanel1.add(ed_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 60, -1));
 
         jLabel1.setText("ID");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
         jPanel1.add(ed_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 140, -1));
 
         jLabel2.setText("Data");
@@ -126,7 +135,7 @@ public class JFVenda extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 310, 120));
 
         jLabel3.setText("Cliente");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         ed_pesqcliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -171,10 +180,16 @@ public class JFVenda extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbItensVenda);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 600, 140));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 600, 100));
 
         jLabel5.setText("Itens da Venda");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, -1, -1));
+
+        jButton1.setText("Finalizar");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
+
+        jButton2.setText("jButton2");
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, -1, -1));
 
         jTabbedPane2.addTab("Venda", jPanel1);
 
@@ -189,10 +204,7 @@ public class JFVenda extends javax.swing.JFrame {
             .addGap(0, 454, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab("Finalização", jPanel2);
-
-        getContentPane().add(jTabbedPane2);
-        jTabbedPane2.setBounds(0, 50, 710, 480);
+        jTabbedPane2.addTab("Consulta", jPanel2);
 
         jPanel5.setBackground(new java.awt.Color(245, 171, 53));
         jPanel5.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -236,7 +248,7 @@ public class JFVenda extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 439, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(6, 6, 6)
                 .addComponent(jLabel10)
@@ -258,8 +270,20 @@ public class JFVenda extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel5);
-        jPanel5.setBounds(0, -1, 710, 50);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -383,6 +407,8 @@ public class JFVenda extends javax.swing.JFrame {
     private javax.swing.JTextField ed_id;
     private javax.swing.JTextField ed_pesqcliente;
     private javax.swing.JTextField ed_pesqlivro;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

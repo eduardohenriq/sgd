@@ -9,7 +9,6 @@ import br.com.projetoaula.controller.DiscoDAO;
 import br.com.projetoaula.controller.GeneroDAO;
 import br.com.projetoaula.controller.ArtistaDAO;
 import br.com.projetoaula.controller.Servicos;
-import com.mysql.fabric.xmlrpc.base.Data;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
