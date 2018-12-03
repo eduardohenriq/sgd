@@ -131,4 +131,43 @@ public class CarrinhoDAO {
 
     }
     
+    public void limparCarrinho(JFrame jfvenda) {
+
+        String sql = "Truncate table carrinho";
+
+        try {
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            pst.execute();
+
+            con.desconector(conexao);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(jfvenda, ex);
+        }
+
+    }
+    
+    public String totalCarrinho(JFrame jfvenda){
+        
+         String sql = "SELECT SUM(car_precodisco) as total from carrinho;";
+         String total=null;
+        try {
+            conexao = con.conector();
+            pst = conexao.prepareStatement(sql);
+            rs=pst.executeQuery();
+            rs.first();
+            total = String.valueOf(rs.getDouble("total"));
+                        
+            con.desconector(conexao);
+            
+           
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(jfvenda, ex);
+        }
+        
+        return total;
+    }
+    
 }

@@ -7,11 +7,22 @@ package br.com.projetoaula.view;
 
 import br.com.projetoaula.controller.CarrinhoDAO;
 import br.com.projetoaula.controller.Servicos;
+import br.com.projetoaula.controller.VendaDAO;
 import br.com.projetoaula.model.Carrinho;
+import br.com.projetoaula.model.Cliente;
 import br.com.projetoaula.model.Disco;
+import br.com.projetoaula.model.Pedido;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -26,6 +37,12 @@ public class JFVenda extends javax.swing.JFrame {
     Disco disco = new Disco();
     CarrinhoDAO carDAO = new CarrinhoDAO();
     Carrinho car = new Carrinho();
+    Pedido pedido = new Pedido();
+    VendaDAO vendaDAO = new VendaDAO();
+    Cliente cliente = new Cliente();
+    
+    boolean clicou = false;
+    int codcliente;
         
     public JFVenda() {
         initComponents();
@@ -53,13 +70,22 @@ public class JFVenda extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         ed_pesqcliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        ed_pesqlivro = new javax.swing.JTextField();
+        ed_pesqdisco = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbItensVenda = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        ed_nomecliente = new javax.swing.JTextField();
+        lbl_total = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jc_data = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        ed_pesqped = new javax.swing.JTextField();
+        btn_pesqped = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tb_consultaped = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -67,6 +93,11 @@ public class JFVenda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTabbedPane2.setBackground(new java.awt.Color(52, 73, 94));
         jTabbedPane2.setForeground(new java.awt.Color(52, 73, 94));
@@ -135,7 +166,7 @@ public class JFVenda extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 310, 120));
 
         jLabel3.setText("Cliente");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
 
         ed_pesqcliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -147,12 +178,12 @@ public class JFVenda extends javax.swing.JFrame {
         jLabel4.setText("Disco");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
 
-        ed_pesqlivro.addKeyListener(new java.awt.event.KeyAdapter() {
+        ed_pesqdisco.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                ed_pesqlivroKeyTyped(evt);
+                ed_pesqdiscoKeyTyped(evt);
             }
         });
-        jPanel1.add(ed_pesqlivro, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 310, -1));
+        jPanel1.add(ed_pesqdisco, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 310, -1));
 
         tbItensVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -186,22 +217,92 @@ public class JFVenda extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, -1, -1));
 
         jButton1.setText("Finalizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
 
-        jButton2.setText("jButton2");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, -1, -1));
+        jLabel6.setText("Cliente");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        ed_nomecliente.setEditable(false);
+        jPanel1.add(ed_nomecliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 170, -1));
+
+        lbl_total.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lbl_total.setForeground(new java.awt.Color(0, 102, 0));
+        lbl_total.setText("R$");
+        jPanel1.add(lbl_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setText("Valor:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, -1, -1));
+        jPanel1.add(jc_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 140, -1));
 
         jTabbedPane2.addTab("Venda", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(52, 73, 94));
+
+        jLabel7.setText("Digite o pedido para consulta:");
+
+        btn_pesqped.setText("Consultar");
+        btn_pesqped.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pesqpedActionPerformed(evt);
+            }
+        });
+
+        tb_consultaped.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome", "Preco", "Data_Compra", "Cliente"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(tb_consultaped);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 708, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(264, 264, 264)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(309, 309, 309)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_pesqped)
+                            .addComponent(ed_pesqped, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 132, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 454, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(ed_pesqped, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_pesqped)
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Consulta", jPanel2);
@@ -286,6 +387,7 @@ public class JFVenda extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabProdutoMouseClicked
@@ -300,14 +402,18 @@ public class JFVenda extends javax.swing.JFrame {
         carDAO.inserir(disco, this);
 
         carDAO.consultarItensVenda(tbItensVenda, this);
+        
+        lbl_total.setText("R$"+carDAO.totalCarrinho(this));
 
     }//GEN-LAST:event_tabProdutoMouseClicked
 
     private void tabClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabClienteMouseClicked
         // TODO add your handling code here:
         int line = tabCliente.getSelectedRow();
-        String valor = String.valueOf(tabCliente.getValueAt(line, 0));
-        System.out.println(valor);
+        int valor = Integer.valueOf(tabCliente.getValueAt(line, 0).toString());
+        String nome = tabCliente.getValueAt(line, 1).toString();
+        codcliente = valor;
+        ed_nomecliente.setText(nome);
     }//GEN-LAST:event_tabClienteMouseClicked
 
     private void ed_pesqclienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ed_pesqclienteKeyTyped
@@ -315,26 +421,26 @@ public class JFVenda extends javax.swing.JFrame {
         carDAO.consultarCliente(ed_pesqcliente.getText(), tabCliente, this);
     }//GEN-LAST:event_ed_pesqclienteKeyTyped
 
-    private void ed_pesqlivroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ed_pesqlivroKeyTyped
+    private void ed_pesqdiscoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ed_pesqdiscoKeyTyped
         // TODO add your handling code here:
-        carDAO.consultaNomeDisco(ed_pesqlivro.getText(), tabProduto);
-    }//GEN-LAST:event_ed_pesqlivroKeyTyped
+        carDAO.consultaNomeDisco(ed_pesqdisco.getText(), tabProduto);
+    }//GEN-LAST:event_ed_pesqdiscoKeyTyped
 
     private void tbItensVendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbItensVendaKeyPressed
         // TODO add your handling code here:
         int contador = tbItensVenda.getRowCount();
         if (contador != 0) {
-            if (evt.getKeyCode() == KeyEvent.VK_D) {
-                Carrinho car = new Carrinho();
-                CarrinhoDAO carDAO = new CarrinhoDAO();
+            if (evt.getKeyCode() == com.sun.glass.events.KeyEvent.VK_D) {
                 int line = tbItensVenda.getSelectedRow();
 
                 car.setId_carrinho(Integer.valueOf(tbItensVenda.getValueAt(line, 0).toString()));
 
                 //System.out.println(car.getCar_id());
                 carDAO.deletar(car, this);
+                 carDAO.totalCarrinho(this);
                 carDAO.consultarItensVenda(tbItensVenda, this);
-
+                 lbl_total.setText("R$"+carDAO.totalCarrinho(this)); 
+               
             }
 
         } else {
@@ -366,6 +472,45 @@ public class JFVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.clicarMouse(evt);
     }//GEN-LAST:event_jPanel5MousePressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        Date ddd = (Date) jc_data.getDate();
+        pedido.setCliente_pedido(codcliente);
+         int codped = Integer.valueOf(ed_id.getText());
+        
+         
+         if(ddd == null || ed_nomecliente.getText().isEmpty() || tbItensVenda.getRowCount()==0){
+             
+             JOptionPane.showMessageDialog(this, "Preencher Nome, Data e Produtos");
+             
+         }else{
+             DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        String date = fmt.format(this.jc_data.getDate());
+        
+        pedido.setData_pedido(date);
+             
+             pedido.setValor_pedido(Double.valueOf(carDAO.totalCarrinho(this)));
+             vendaDAO.inserirPed(pedido, this);
+             vendaDAO.inserirItem(this, codped);
+             carDAO.limparCarrinho(this);
+              JOptionPane.showMessageDialog(this, "Venda Finalizada com Sucesso!");
+              s.limparTabela(tbItensVenda);
+              this.dispose();
+              new JFVenda().setVisible(true);
+         }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        ed_id.setText(String.valueOf(vendaDAO.consultarPedido(this)));
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btn_pesqpedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pesqpedActionPerformed
+        // TODO add your handling code here:
+        vendaDAO.consultarPedidoFinal(tb_consultaped, this, Integer.valueOf(ed_pesqped.getText()));
+    }//GEN-LAST:event_btn_pesqpedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,12 +548,14 @@ public class JFVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_pesqped;
     private javax.swing.JTextField ed_data;
     private javax.swing.JTextField ed_id;
+    private javax.swing.JTextField ed_nomecliente;
     private javax.swing.JTextField ed_pesqcliente;
-    private javax.swing.JTextField ed_pesqlivro;
+    private javax.swing.JTextField ed_pesqdisco;
+    private javax.swing.JTextField ed_pesqped;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -416,6 +563,9 @@ public class JFVenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -423,9 +573,13 @@ public class JFVenda extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private com.toedter.calendar.JDateChooser jc_data;
+    private javax.swing.JLabel lbl_total;
     private javax.swing.JTable tabCliente;
     private javax.swing.JTable tabProduto;
     private javax.swing.JTable tbItensVenda;
+    private javax.swing.JTable tb_consultaped;
     // End of variables declaration//GEN-END:variables
 }
