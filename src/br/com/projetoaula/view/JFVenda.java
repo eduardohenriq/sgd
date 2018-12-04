@@ -475,21 +475,18 @@ public class JFVenda extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        Date ddd = (Date) jc_data.getDate();
+       
         pedido.setCliente_pedido(codcliente);
-         int codped = Integer.valueOf(ed_id.getText());
+        int codped = Integer.valueOf(ed_id.getText());
         
          
-         if(ddd == null || ed_nomecliente.getText().isEmpty() || tbItensVenda.getRowCount()==0){
+         if(jc_data.getDate() == null || ed_nomecliente.getText().isEmpty() || tbItensVenda.getRowCount()==0){
              
              JOptionPane.showMessageDialog(this, "Preencher Nome, Data e Produtos");
              
          }else{
-             DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        String date = fmt.format(this.jc_data.getDate());
-        
-        pedido.setData_pedido(date);
+             
+             pedido.setData_pedido(s.formatarCalendario(jc_data.getDate()));
              
              pedido.setValor_pedido(Double.valueOf(carDAO.totalCarrinho(this)));
              vendaDAO.inserirPed(pedido, this);

@@ -6,6 +6,9 @@
 package br.com.projetoaula.controller;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -501,4 +504,12 @@ public class Servicos {
         
         f.setLocation(x - xMouse, y - yMouse);
     }
+    
+    
+    public String formatarCalendario(Date d){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(d).toString();        
+    }
+    
 }
+
