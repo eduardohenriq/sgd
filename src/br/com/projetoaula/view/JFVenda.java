@@ -80,6 +80,7 @@ public class JFVenda extends javax.swing.JFrame {
         lbl_total = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jc_data = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         ed_pesqped = new javax.swing.JTextField();
@@ -187,10 +188,7 @@ public class JFVenda extends javax.swing.JFrame {
 
         tbItensVenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Codigo", "Nome", "Preco"
@@ -239,6 +237,14 @@ public class JFVenda extends javax.swing.JFrame {
         jLabel8.setText("Valor:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 410, -1, -1));
         jPanel1.add(jc_data, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 140, -1));
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, -1, -1));
 
         jTabbedPane2.addTab("Venda", jPanel1);
 
@@ -509,6 +515,13 @@ public class JFVenda extends javax.swing.JFrame {
         vendaDAO.consultarPedidoFinal(tb_consultaped, this, Integer.valueOf(ed_pesqped.getText()));
     }//GEN-LAST:event_btn_pesqpedActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        carDAO.limparCarrinho(this);
+        DefaultTableModel model = (DefaultTableModel) tbItensVenda.getModel();
+        model.setRowCount(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -553,6 +566,7 @@ public class JFVenda extends javax.swing.JFrame {
     private javax.swing.JTextField ed_pesqdisco;
     private javax.swing.JTextField ed_pesqped;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

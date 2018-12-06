@@ -5,11 +5,29 @@
  */
 package br.com.projetoaula.view;
 
+import br.com.projetoaula.controller.Conexao;
 import br.com.projetoaula.controller.Servicos;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JFrame;
 import br.com.projetoaula.view.JFLogin;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +36,12 @@ import br.com.projetoaula.view.JFLogin;
 public class JFPrincipal extends javax.swing.JFrame {
     Servicos s = new Servicos();
     JFLogin l = new JFLogin();
+    
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    Conexao con = new Conexao();
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     /**
@@ -52,9 +76,9 @@ public class JFPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnRelVendas = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnRelClientes = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -256,11 +280,15 @@ public class JFPrincipal extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(52, 73, 94));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.black, null));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/dinheiro.png"))); // NOI18N
-        jButton2.setText("Relatório de Vendas");
-        jButton2.setEnabled(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRelVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/dinheiro.png"))); // NOI18N
+        btnRelVendas.setText("Relatório de Vendas");
+        btnRelVendas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRelVendas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRelVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelVendasActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user.png"))); // NOI18N
         jButton4.setText("Usuários");
@@ -268,11 +296,15 @@ public class JFPrincipal extends javax.swing.JFrame {
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cliente.png"))); // NOI18N
-        jButton5.setText("Clientes");
-        jButton5.setEnabled(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRelClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cliente.png"))); // NOI18N
+        btnRelClientes.setText("Clientes");
+        btnRelClientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRelClientes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRelClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelClientesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -285,9 +317,9 @@ public class JFPrincipal extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnRelVendas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -295,8 +327,8 @@ public class JFPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton5))
+                    .addComponent(btnRelVendas)
+                    .addComponent(btnRelClientes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addContainerGap(11, Short.MAX_VALUE))
@@ -453,6 +485,149 @@ public class JFPrincipal extends javax.swing.JFrame {
         new JFVenda().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnRelVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelVendasActionPerformed
+        // TODO add your handling code here:
+        Document document = new Document();
+        try {
+              
+            PdfWriter.getInstance(document, new FileOutputStream("vendas.pdf"));
+            document.open();
+              
+            
+            String query="select * from vw_pedido_final";
+            
+            conexao = con.conector();
+            pst = conexao.prepareStatement(query);
+            rs = pst.executeQuery();
+            
+            Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+            
+            Phrase Nnome = new Phrase("Nome", boldFont );
+            Phrase Npreco = new Phrase("Preço", boldFont );
+            Phrase Ncliente = new Phrase("Cliente", boldFont );
+            
+            
+            document.add(new Paragraph("Relatório de Cervejas Registradas"));
+            
+            PdfPTable table = new PdfPTable(3);
+            
+            table.addCell(Nnome);
+            table.addCell(Npreco);
+            table.addCell(Ncliente);
+            
+            document.add(new Paragraph(" "));
+            
+            while(rs.next()){
+                /*Paragraph para = new Paragraph(rs.getString("marca")+" "+rs.getString("tipo"));
+                document.add(para);
+                document.add(new Paragraph(" "));*/
+                
+                PdfPCell nome = new PdfPCell(new Phrase(rs.getString("Nome")));
+                table.addCell(nome);
+                PdfPCell preco = new PdfPCell(new Phrase(rs.getString("Preco")));
+                table.addCell(preco);
+                PdfPCell cliente = new PdfPCell(new Phrase(rs.getString("Cliente")));
+                table.addCell(cliente);   
+                
+                
+            }
+            document.add(table);
+            
+            
+        }
+        catch(DocumentException de) {
+            System.err.println(de.getMessage());
+        }
+        catch(IOException ioe) {
+            System.err.println(ioe.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(JFPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        document.close();
+        
+        try {
+            // TODO add your handling code here:
+            Process p = Runtime.getRuntime().exec("cmd.exe /C vendas.pdf");
+        } catch (IOException ex) {
+            Logger.getLogger(JFPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+        }
+        
+    }//GEN-LAST:event_btnRelVendasActionPerformed
+
+    private void btnRelClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelClientesActionPerformed
+        // TODO add your handling code here:
+        Document document = new Document();
+        try {
+              
+            PdfWriter.getInstance(document, new FileOutputStream("clientes.pdf"));
+            document.open();
+              
+            
+            String query="select * from cliente";
+            
+            conexao = con.conector();
+            pst = conexao.prepareStatement(query);
+            rs = pst.executeQuery();
+            
+            Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+            
+            Phrase Nnome = new Phrase("Nome", boldFont );
+            Phrase Nendereco = new Phrase("Endereço", boldFont );
+            Phrase Ntelefone = new Phrase("Telefone", boldFont );
+            Phrase Ncpf = new Phrase("CPF", boldFont );
+            
+            
+            document.add(new Paragraph("Relatório de Clientes Registrados"));
+            
+            PdfPTable table = new PdfPTable(4);
+            
+            table.addCell(Nnome);
+            table.addCell(Nendereco);
+            table.addCell(Ntelefone);
+            table.addCell(Ncpf);
+            
+            document.add(new Paragraph(" "));
+            
+            while(rs.next()){
+                /*Paragraph para = new Paragraph(rs.getString("marca")+" "+rs.getString("tipo"));
+                document.add(para);
+                document.add(new Paragraph(" "));*/
+                
+                PdfPCell nome = new PdfPCell(new Phrase(rs.getString("nome_cliente")));
+                table.addCell(nome);
+                PdfPCell endereco = new PdfPCell(new Phrase(rs.getString("endereco_cliente")));
+                table.addCell(endereco);
+                PdfPCell telefone = new PdfPCell(new Phrase(rs.getString("telefone_cliente")));
+                table.addCell(telefone);   
+                PdfPCell cpf = new PdfPCell(new Phrase(rs.getString("cpf_cliente")));
+                table.addCell(cpf);  
+                
+                
+            }
+            document.add(table);
+            
+            
+        }
+        catch(DocumentException de) {
+            System.err.println(de.getMessage());
+        }
+        catch(IOException ioe) {
+            System.err.println(ioe.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(JFPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        document.close();
+        
+        try {
+            // TODO add your handling code here:
+            Process p = Runtime.getRuntime().exec("cmd.exe /C clientes.pdf");
+        } catch (IOException ex) {
+            Logger.getLogger(JFPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }//GEN-LAST:event_btnRelClientesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -492,11 +667,11 @@ public class JFPrincipal extends javax.swing.JFrame {
     public javax.swing.JButton btnCadCli;
     private javax.swing.JButton btnCadDisco;
     public javax.swing.JButton btnCadUsu;
+    private javax.swing.JButton btnRelClientes;
+    private javax.swing.JButton btnRelVendas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
